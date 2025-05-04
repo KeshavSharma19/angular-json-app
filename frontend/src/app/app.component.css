@@ -1,0 +1,91 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+}
+
+.container {
+    display: flex;
+    border: 2px solid #000;
+    width: 800px;
+    height: 400px;
+}
+
+.sidebar {
+    width: 200px;
+    border-right: 2px solid #000;
+}
+
+.date {
+    padding: 10px;
+    border-bottom: 2px solid #000;
+    font-size: 14px;
+}
+.selected {
+    background: #d9d9d9;
+    font-weight: bold;
+}
+
+.date:first-child {
+    background: #d9d9d9;
+    font-weight: bold;
+}
+
+.form-section {
+    flex: 1;
+    padding: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.form-group label {
+    width: 180px;
+    font-size: 16px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"] {
+    width: 220px;
+    padding: 6px;
+    font-size: 16px;
+}
+
+.form-group input[type="checkbox"] {
+    transform: scale(1.2);
+    margin-left: 4px;
+}
+
+.form-group .number-field {
+    display: flex;
+    align-items: center;
+}
+
+.form-group .number-field input {
+    width: 60px;
+    text-align: right;
+}
+
+.form-group .number-field span {
+    margin-left: 5px;
+    font-size: 16px;
+}
+
+.save-button {
+    text-align: right;
+}
+
+.save-button button {
+    padding: 6px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
