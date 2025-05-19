@@ -22,18 +22,33 @@ export class AppComponent implements OnInit {
     // });
     this.loadData();
   }
-
   loadData() {
     this.dataService.getData().subscribe((res: any) => {
+      console.log('Data received:', res);
       this.data = res;
-      console.log('Data received:', this.data);
-      this.selectedProperties = this.data.Datas[0];
-      console.log(this.selectedIndex)
-      console.log('Selected Properties:', this.selectedProperties);
+      const allLabelsSet = new Set<string>();
+      res.Datas.forEach((item: any) => {
+        item.Properties.forEach((prop: any) => {
+          allLabelsSet.add(prop.Label);
+        });
+      });
+      const allLabels = Array.from(allLabelsSet);
+      res.organizedTableData = res.Datas.map((item: any) => {
+        const row: any = { SamplingTime: item.SamplingTime };
+        allLabels.forEach((label) => {
+          const prop = item.Properties.find((p: any) => p.Label === label);
+          row[label] = prop ? prop.Value : '';
+        });
+        return row;
+      });
+      this.allLabels = allLabels;
+      this.selectedProperties = res.organizedTableData;
       this.buildTableHeaders();
     });
   }
   getPropertyValue(item: any, header: string): string {
+    console.log('Item:', item);
+    console.log('Header:', header);
     return item.Properties.find((p: any) => p.Label === header)?.Value || '';
   }
   buildTableHeaders() {
@@ -54,14 +69,14 @@ export class AppComponent implements OnInit {
   }
 
   saveData(): void {
-    const updatedData = { ...this.data };
+    const updatedData = { ...this.selectedProperties };
     this.dataService.updateData(updatedData).subscribe((response) => {
       console.log('Data saved successfully:', response);
     });
   }
-  selectedIndex : number = 0;
+  selectedIndex: number = 0;
   selectedData(e: any, index: number) {
-    console.log(e , index)
+    console.log(e, index);
     this.selectedIndex = index;
     console.log('Selected data:', e);
 

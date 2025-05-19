@@ -6,14 +6,15 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class DataService {
-  private apiUrl = 'http://localhost:3000/getData'; // .NET API URL
+  private getApiUrl = 'http://localhost:3000/getData';
+  private postApiUrl = 'http://localhost:3000/addData';
 
   constructor(private http: HttpClient) { }
   getData(): Observable<any> {
-    return this.http.get(this.apiUrl);
+    return this.http.get(this.getApiUrl);
   }
 
   updateData(data: any): Observable<any> {
-    return this.http.post(this.apiUrl, data);
+    return this.http.post(this.postApiUrl, data);
   }
 }

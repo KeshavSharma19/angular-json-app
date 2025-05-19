@@ -13,10 +13,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of data?.Datas">
+      <tr *ngFor="let item of selectedProperties">
         <td>{{ item.SamplingTime | date: 'dd-MM-yyyy hh:mm:ss a' }}</td>
-        <td *ngFor="let header of allLabels">
-          {{ getPropertyValue(item, header) }}
+        <td>
+          {{item['Project Name']}}
+        </td>
+        <td>
+          {{item['Construction Count']}}
+        </td>
+        <td>
+          {{item['Is Construction Completed']}}
+        </td>
+        <td>
+          {{item['Length of the road']}}
         </td>
       </tr>
     </tbody>
@@ -27,39 +36,39 @@
 <ng-container *ngIf="currentView === 'detailed'">
   <div class="container">
     <div class="sidebar">
-      <ng-container *ngFor="let item of data?.Datas; let i = index">
-        <div (click)="selectedData(item, i)" [ngClass]="{ 'date': selectedIndex === i, 'selected': selectedIndex === i }">
+      <ng-container *ngFor="let item of selectedProperties; let i = index">
+        <div (click)="selectedData(item, i)" style="cursor: pointer;"
+          [ngClass]="{ 'date': selectedIndex === i, 'selected': selectedIndex === i }">
           {{ item.SamplingTime | date: 'dd-MM-yyyy hh:mm:ss a' }}
         </div>
       </ng-container>
-      <!-- <div class="date">22-04-2021 11:00:05 AM</div>
-      <div class="date">23-04-2021 11:00:05 AM</div> -->
     </div>
-    <div class="form-section">
-      <div class="form-group">
-        <label>Project Name:</label>
-        {{selectedProjectData|json}}
-        <input type="text" [(ngModel)]="selectedProjectData" />
-      </div>
-      <div class="form-group">
-        <label>Construction Count:</label>
-        <input type="number" value="2" />
-      </div>
-      <div class="form-group">
-        <label>Is Contruction Completed:</label>
-        <input type="checkbox" [(ngModel)]="selectedProjectData" />
-      </div>
-      <div class="form-group">
-        <label>Length of the road:</label>
-        <div class="number-field">
-          <input type="number" step="0.1" value="5.6" />
-          <span>KM</span>
+    <ng-container *ngFor="let item of selectedProperties; let i = index">
+      <div *ngIf="selectedIndex === i" class="form-section">
+        <div class="form-group">
+          <label>Project Name</label>
+          <input type="text" [(ngModel)]="item['Project Name']" />
+        </div>
+        <div class="form-group">
+          <label>Construction Count</label>
+          <input type="number" [(ngModel)]="item['Construction Count']" />
+        </div>
+        <div class="form-group">
+          <label>Is Construction Completed</label>
+          <input type="checkbox" [(ngModel)]="item['Is Construction Completed']" />
+        </div>
+        <div class="form-group">
+          <label>Length of the road</label>
+          <div class="number-field">
+        <input type="number" [(ngModel)]="item['Length of the road']" />
+        <span>KM</span>
+          </div>
+        </div>
+        <div class="save-button">
+          <button (click)="saveData()">Save</button>
         </div>
       </div>
-      <div class="save-button">
-        <button>Save</button>
-      </div>
-    </div>
+    </ng-container>
+
   </div>
-  <button (click)="saveData()">Save</button>
 </ng-container>
